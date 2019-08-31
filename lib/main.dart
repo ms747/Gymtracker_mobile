@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'components/Accordian.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -80,27 +82,23 @@ class MyApp extends StatelessWidget {
         ),
         body: Center(
           child: Container(
-            child: GridView(
-              padding: EdgeInsets.all(10),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-              ),
-              children: <Widget>[
-                ColorTile(col: Colors.red),
-                ColorTile(col: Colors.blue),
-                ColorTile(col: Colors.amber),
-                ColorTile(col: Colors.green),
-                ColorTile(col: Colors.red),
-                ColorTile(col: Colors.blue),
-                ColorTile(col: Colors.amber),
-                ColorTile(col: Colors.green),
-              ],
-            ),
+            child: _ListView(),
           ),
         ),
       ),
+    );
+  }
+}
+
+class _ListView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      primary: false,
+      children: <Widget>[
+        MyAccordian(),
+        MyAccordian(),
+      ],
     );
   }
 }
@@ -115,21 +113,6 @@ class Avatar extends StatelessWidget {
       radius: this.radius,
       backgroundImage: NetworkImage(
         "https://lh4.googleusercontent.com/-5kR9LOpxYqA/AAAAAAAAAAI/AAAAAAAABFU/ihjSdIP-dss/photo.jpg",
-      ),
-    );
-  }
-}
-
-class ColorTile extends StatelessWidget {
-  final Color col;
-  ColorTile({@required this.col});
-  @override
-  Widget build(BuildContext context) {
-    return GridTile(
-      child: Container(
-        decoration: BoxDecoration(
-          color: this.col,
-        ),
       ),
     );
   }
