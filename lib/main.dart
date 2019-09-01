@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gymtrackerandroid/bloc/bloc.dart';
+import 'package:gymtrackerandroid/bloc/exercise_bloc.dart';
+import 'package:gymtrackerandroid/bloc/exercise_state.dart';
+import 'package:gymtrackerandroid/pages/Login.dart';
 
 import 'components/Accordian.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  final _exerciseBloc = ExerciseBloc();
   final _key = new GlobalKey<ScaffoldState>();
 
   void _showBottomMenu() {
@@ -47,7 +53,10 @@ class MyApp extends StatelessWidget {
                 ListTile(
                   leading: Icon(Icons.lock),
                   title: Text("Logout"),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushReplacement(_key.currentContext,
+                        MaterialPageRoute(builder: (ctx) => LoginPage()));
+                  },
                 ),
                 Divider(
                   color: Colors.black,
@@ -62,6 +71,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _exerciseBloc.dispatch(AppStarted());
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Gym Tracker',
@@ -80,10 +90,15 @@ class MyApp extends StatelessWidget {
             ),
           ],
         ),
-        body: Center(
-          child: Container(
-            child: _ListView(),
-          ),
+        body: BlocBuilder<ExerciseBloc, ExerciseState>(
+          builder: (ctx, data) {
+            return Center(
+              child: Container(
+                child: _ListView(),
+              ),
+            );
+          },
+          bloc: _exerciseBloc,
         ),
       ),
     );
