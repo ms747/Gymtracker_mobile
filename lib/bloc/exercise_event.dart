@@ -1,4 +1,3 @@
-import 'package:gymtrackerandroid/bloc/exercise_bloc.dart';
 import 'package:meta/meta.dart';
 
 @immutable

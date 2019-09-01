@@ -78,7 +78,7 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         key: _key,
         appBar: AppBar(
-          title: Text('🏋 Gym Tracker'),
+          title: Text('Gym Tracker'),
           actions: <Widget>[
             FlatButton(
               child: Avatar(

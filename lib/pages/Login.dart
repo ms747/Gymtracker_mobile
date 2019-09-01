@@ -31,13 +31,18 @@ class LoginPage extends StatelessWidget {
                       style: TextStyle(fontSize: 96),
                     ),
                     RaisedButton(
+                      elevation: 4,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
                       onPressed: () {
                         _exerciseBloc.dispatch(GoogleLogin());
                         Navigator.pushReplacement(_key.currentContext,
                             MaterialPageRoute(builder: (ctx) => MyApp()));
                       },
                       color: Colors.red,
-                      child: Text("Login with Google"),
+                      child: Text(
+                        "Login with Google",
+                        style: TextStyle(color: Colors.white),
+                      ),
                     )
                   ],
                 ),
