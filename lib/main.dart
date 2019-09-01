@@ -7,7 +7,7 @@ import 'package:gymtrackerandroid/pages/Login.dart';
 
 import 'components/Accordian.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(LoginPage());
 
 class MyApp extends StatelessWidget {
   final _exerciseBloc = ExerciseBloc();

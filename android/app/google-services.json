@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "242373552119",
+    "firebase_url": "https://weight-tracker-20192.firebaseio.com",
+    "project_id": "weight-tracker-20192",
+    "storage_bucket": "weight-tracker-20192.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:242373552119:android:07ea4437c02060e3",
+        "android_client_info": {
+          "package_name": "com.example.gymtrackerandroid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "242373552119-igdp6pa0ah0a5p0pvjjbmaq1cm4o1ops.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsMqKaC4j_7Zxh_vVmRhgbcPUVw57W0-Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "242373552119-igdp6pa0ah0a5p0pvjjbmaq1cm4o1ops.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
