@@ -1,8 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gymtrackerandroid/bloc/bloc.dart';
-import 'package:gymtrackerandroid/bloc/exercise_bloc.dart';
-import 'package:gymtrackerandroid/bloc/exercise_state.dart';
 import 'package:gymtrackerandroid/pages/Login.dart';
 
 import 'components/Accordian.dart';
@@ -10,7 +7,6 @@ import 'components/Accordian.dart';
 void main() => runApp(LoginPage());
 
 class MyApp extends StatelessWidget {
-  final _exerciseBloc = ExerciseBloc();
   final _key = new GlobalKey<ScaffoldState>();
 
   void _showBottomMenu() {
@@ -34,10 +30,7 @@ class MyApp extends StatelessWidget {
                     children: <Widget>[
                       Container(
                         margin: EdgeInsets.only(top: 10, bottom: 10),
-                        child: Text(
-                          "Welcome, Mayur Shah",
-                          style: Theme.of(_key.currentContext).textTheme.title,
-                        ),
+                        child: _buildtext(),
                       ),
                       Avatar(
                         radius: 60,
@@ -54,6 +47,7 @@ class MyApp extends StatelessWidget {
                   leading: Icon(Icons.lock),
                   title: Text("Logout"),
                   onTap: () {
+                    FirebaseAuth.instance.signOut();
                     Navigator.pushReplacement(_key.currentContext,
                         MaterialPageRoute(builder: (ctx) => LoginPage()));
                   },
@@ -69,9 +63,15 @@ class MyApp extends StatelessWidget {
         });
   }
 
+  Text _buildtext() {
+    return Text(
+      "Welcome, ",
+      style: Theme.of(_key.currentContext).textTheme.title,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    _exerciseBloc.dispatch(AppStarted());
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Gym Tracker',
@@ -90,32 +90,24 @@ class MyApp extends StatelessWidget {
             ),
           ],
         ),
-        body: BlocBuilder<ExerciseBloc, ExerciseState>(
-          builder: (ctx, data) {
-            return Center(
-              child: Container(
-                child: _ListView(),
-              ),
-            );
-          },
-          bloc: _exerciseBloc,
+        body: Center(
+          child: Container(
+            child: _listView(),
+          ),
         ),
       ),
     );
   }
 }
 
-class _ListView extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      primary: false,
-      children: <Widget>[
-        MyAccordian(),
-        MyAccordian(),
-      ],
-    );
-  }
+Widget _listView() {
+  return ListView(
+    primary: false,
+    children: <Widget>[
+      MyAccordian(),
+      MyAccordian(),
+    ],
+  );
 }
 
 class Avatar extends StatelessWidget {
