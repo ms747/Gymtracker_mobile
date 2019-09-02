@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gymtrackerandroid/bloc/User.dart';
 import 'package:gymtrackerandroid/pages/Login.dart';
+import 'package:provider/provider.dart';
 
 import 'components/Accordian.dart';
 
@@ -48,8 +50,10 @@ class MyApp extends StatelessWidget {
                   title: Text("Logout"),
                   onTap: () {
                     FirebaseAuth.instance.signOut();
-                    Navigator.pushReplacement(_key.currentContext,
-                        MaterialPageRoute(builder: (ctx) => LoginPage()));
+                    Future(() {
+                      Navigator.pushReplacement(_key.currentContext,
+                          MaterialPageRoute(builder: (ctx) => LoginPage()));
+                    });
                   },
                 ),
                 Divider(
@@ -65,7 +69,7 @@ class MyApp extends StatelessWidget {
 
   Text _buildtext() {
     return Text(
-      "Welcome, ",
+      "Welcome, ${userBloc.getuser.displayName}",
       style: Theme.of(_key.currentContext).textTheme.title,
     );
   }
@@ -75,26 +79,28 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Gym Tracker',
-      home: Scaffold(
-        key: _key,
-        appBar: AppBar(
-          title: Text('Gym Tracker'),
-          actions: <Widget>[
-            FlatButton(
-              child: Avatar(
-                radius: 20,
+      home: ChangeNotifierProvider.value(
+              child: Scaffold(
+          key: _key,
+          appBar: AppBar(
+            title: Text('Gym Tracker'),
+            actions: <Widget>[
+              FlatButton(
+                child: Avatar(
+                  radius: 20,
+                ),
+                onPressed: () {
+                  _showBottomMenu();
+                },
               ),
-              onPressed: () {
-                _showBottomMenu();
-              },
-            ),
-          ],
-        ),
-        body: Center(
-          child: Container(
-            child: _listView(),
+            ],
           ),
-        ),
+          body: Center(
+            child: Container(
+              child: _listView(),
+            ),
+          ),
+        ), value: userBloc,
       ),
     );
   }
@@ -119,7 +125,7 @@ class Avatar extends StatelessWidget {
     return CircleAvatar(
       radius: this.radius,
       backgroundImage: NetworkImage(
-        "https://lh4.googleusercontent.com/-5kR9LOpxYqA/AAAAAAAAAAI/AAAAAAAABFU/ihjSdIP-dss/photo.jpg",
+        userBloc.getuser.photoUrl,
       ),
     );
   }

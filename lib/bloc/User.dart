@@ -3,10 +3,23 @@ import 'package:flutter/material.dart';
 
 class UserBloc extends ChangeNotifier{
   FirebaseUser _user;
+  bool _loggedInStatus = false;
 
-  FirebaseUser get user => _user;
+  bool get getloggedInStatus => _loggedInStatus;
 
-  set user(FirebaseUser user) {
-    _user = user;
+  set setloggedInStatus(bool loggedInStatus) {
+    _loggedInStatus = loggedInStatus;
   }
+
+  FirebaseUser get getuser =>  _user;
+
+  set setuser(FirebaseUser user) {
+    _user = user;
+    notifyListeners();
+  }
+
+  
+
 }
+
+UserBloc userBloc = new UserBloc();
