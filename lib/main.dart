@@ -4,10 +4,12 @@ import 'package:gymtrackerandroid/pages/Admin.dart';
 import 'package:gymtrackerandroid/pages/Login.dart';
 import 'package:provider/provider.dart';
 
-void main() => runApp(ChangeNotifierProvider(
-      builder: (BuildContext context) => UserBloc(),
-      child: MyApp(),
-    ));
+void main() => runApp(
+      ChangeNotifierProvider(
+        builder: (BuildContext context) => UserBloc(),
+        child: MyApp(),
+      ),
+    );
 
 class MyApp extends StatelessWidget {
   @override

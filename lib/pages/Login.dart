@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gymtrackerandroid/bloc/User.dart';
-import 'package:gymtrackerandroid/helper/auth.dart';
+import 'package:gymtrackerandroid/helper/Auth.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
