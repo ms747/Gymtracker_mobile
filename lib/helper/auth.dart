@@ -15,8 +15,7 @@ Future<FirebaseUser> login() async {
       idToken: googleAuth.idToken,
     );
 
-    user =
-        (await _auth.signInWithCredential(credential)).user;
+    user = (await _auth.signInWithCredential(credential)).user;
     print("signed in " + user.displayName);
   }
   return user;
@@ -32,5 +31,7 @@ Future<FirebaseUser> isLoggedIn() async {
 
 Future<void> logout() {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  return _auth.signOut();
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  var futures = <Future>[_googleSignIn.signOut(),_auth.signOut()];
+  return Future.wait(futures);
 }

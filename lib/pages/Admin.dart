@@ -8,7 +8,7 @@ class AdminPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var user = Provider.of<UserBloc>(context);
     return Scaffold(
-      appBar: buildAppBar(user,context),
+      appBar: buildAppBar(user, context),
       body: buildBody(user, context),
     );
   }
@@ -16,25 +16,23 @@ class AdminPage extends StatelessWidget {
   Widget buildAppBar(UserBloc user, BuildContext context) {
     return AppBar(
       title: Text("Admin Page"),
-      actions: <Widget>[
-        buildProfileIcon(user,context)
-      ],
+      actions: <Widget>[buildProfileIcon(user, context)],
     );
   }
 
   Widget buildProfileIcon(UserBloc user, BuildContext context) {
     return InkWell(
-        onTap: (){
-          doLogout(user,context);
-        },
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(30),
-            child: Image.network(user.user.photoUrl),
-          ),
+      onTap: () {
+        doLogout(user, context);
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(30),
+          child: Image.network(user.user.photoUrl),
         ),
-      );
+      ),
+    );
   }
 
   Widget buildBody(UserBloc user, BuildContext context) {
@@ -47,12 +45,6 @@ class AdminPage extends StatelessWidget {
               return Text("Logged in as, ${value.user.displayName.toString()}");
             },
           ),
-          RaisedButton(
-            onPressed: () {
-              doLogout(user, context);
-            },
-            child: Text("Logout"),
-          )
         ],
       ),
     );
