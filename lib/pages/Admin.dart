@@ -8,38 +8,60 @@ class AdminPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var user = Provider.of<UserBloc>(context);
     return Scaffold(
-      appBar: buildAppBar(user),
-      body: buildCenter(user,context),
+      appBar: buildAppBar(user,context),
+      body: buildBody(user, context),
     );
   }
 
-  AppBar buildAppBar(UserBloc user) {
+  Widget buildAppBar(UserBloc user, BuildContext context) {
     return AppBar(
-      title: Text("Admin Logged in ${user.loggedin}"),
+      title: Text("Admin Page"),
+      actions: <Widget>[
+        buildProfileIcon(user,context)
+      ],
     );
   }
 
-  Widget buildCenter(UserBloc user,BuildContext context) {
+  Widget buildProfileIcon(UserBloc user, BuildContext context) {
+    return InkWell(
+        onTap: (){
+          doLogout(user,context);
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(30),
+            child: Image.network(user.user.photoUrl),
+          ),
+        ),
+      );
+  }
+
+  Widget buildBody(UserBloc user, BuildContext context) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Consumer<UserBloc>(
             builder: (BuildContext context, UserBloc value, Widget child) {
-              return Text("Loggedin State ${value.loggedin.toString()}");
+              return Text("Logged in as, ${value.user.displayName.toString()}");
             },
           ),
           RaisedButton(
             onPressed: () {
-              logout().then((_){
-                user.changeLogin(false);
-                Navigator.pushReplacementNamed(context, "/");
-              });
+              doLogout(user, context);
             },
             child: Text("Logout"),
           )
         ],
       ),
     );
+  }
+
+  void doLogout(UserBloc user, BuildContext context) {
+    logout().then((_) {
+      user.changeLogin(null);
+      Navigator.pushReplacementNamed(context, "/");
+    });
   }
 }

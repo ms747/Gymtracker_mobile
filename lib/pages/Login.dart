@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gymtrackerandroid/bloc/User.dart';
 import 'package:gymtrackerandroid/helper/Auth.dart';
@@ -33,34 +34,45 @@ class _BuildLoginPageState extends State<BuildLoginPage> {
     super.initState();
     isUserLoggedIn(context);
   }
+
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return Container(
+      width: MediaQuery.of(context).size.width * 1.0,
+      color: Colors.blue,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(
-            "Gym Tracker",
-            style: Theme.of(context).textTheme.display1,
-          ),
-          RaisedButton(
-            color: Colors.white70,
-            child: Text("Sign in With Google"),
-            onPressed: () async {
-              // Navigator.pushNamed(context, "/admin");
-              await login();
-              isUserLoggedIn(context);
-            },
-          ),
+          buildText(context),
+          buildRaisedButton(context),
         ],
       ),
     );
   }
 
+  Widget buildRaisedButton(BuildContext context) {
+    return RaisedButton(
+      color: Colors.red,
+      textColor: Colors.white,
+      child: Text("Sign in With Google"),
+      onPressed: () async {
+        await login();
+        isUserLoggedIn(context);
+      },
+    );
+  }
+
+  Widget buildText(BuildContext context) {
+    return Text(
+      "Gym Tracker",
+      style: Theme.of(context).textTheme.display1,
+    );
+  }
+
   void isUserLoggedIn(BuildContext context) {
-    isLoggedIn().then((bool loggedIn) {
-      if (loggedIn) {
-        widget.user.changeLogin(true);
+    isLoggedIn().then((FirebaseUser _user) {
+      if (_user != null) {
+        widget.user.setUser(_user);
         Navigator.pushReplacementNamed(context, "/admin");
       }
     });

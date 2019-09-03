@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-Future<void> login() async {
-  bool status = await isLoggedIn();
-  if (!status) {
+Future<FirebaseUser> login() async {
+  FirebaseUser user = await isLoggedIn();
+  if (user == null) {
     final GoogleSignIn _googleSignIn = GoogleSignIn();
     final FirebaseAuth _auth = FirebaseAuth.instance;
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
@@ -15,20 +15,19 @@ Future<void> login() async {
       idToken: googleAuth.idToken,
     );
 
-    final FirebaseUser user =
+    user =
         (await _auth.signInWithCredential(credential)).user;
     print("signed in " + user.displayName);
   }
+  return user;
 }
 
-Future<bool> isLoggedIn() async {
-  bool loggedIn = false;
+Future<FirebaseUser> isLoggedIn() async {
   final user = await FirebaseAuth.instance.currentUser();
   if (user != null) {
-    loggedIn = true;
     print("Already Logged In");
   }
-  return loggedIn;
+  return user;
 }
 
 Future<void> logout() {

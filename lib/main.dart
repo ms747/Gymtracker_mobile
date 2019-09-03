@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      initialRoute: '/',
+      initialRoute: '/', 
       routes: {
         "/": (context) => LoginPage(),
         "/admin": (context) => AdminPage()
