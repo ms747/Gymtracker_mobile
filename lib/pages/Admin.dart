@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gymtrackerandroid/bloc/User.dart';
+import 'package:gymtrackerandroid/components/Data.dart';
 import 'package:gymtrackerandroid/helper/Auth.dart';
 import 'package:provider/provider.dart';
 
@@ -37,16 +38,7 @@ class AdminPage extends StatelessWidget {
 
   Widget buildBody(UserBloc user, BuildContext context) {
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Consumer<UserBloc>(
-            builder: (BuildContext context, UserBloc value, Widget child) {
-              return Text("Logged in as, ${value.user.displayName.toString()}");
-            },
-          ),
-        ],
-      ),
+      child: FirestoreData()
     );
   }
 

@@ -1,10 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class UserBloc extends ChangeNotifier {
   bool loggedin = false;
   FirebaseUser user;
-
+  Firestore store;
   void changeLogin(bool status){
     loggedin = status;
     notifyListeners();
