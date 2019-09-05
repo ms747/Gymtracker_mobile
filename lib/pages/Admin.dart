@@ -16,7 +16,7 @@ class AdminPage extends StatelessWidget {
 
   Widget buildAppBar(UserBloc user, BuildContext context) {
     return AppBar(
-      title: Text("Admin Page"),
+      title: Text("Dashboard"),
       actions: <Widget>[buildProfileIcon(user, context)],
     );
   }
@@ -27,7 +27,7 @@ class AdminPage extends StatelessWidget {
         doLogout(user, context);
       },
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(12.0),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(30),
           child: Image.network(user.user.photoUrl),
