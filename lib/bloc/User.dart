@@ -1,11 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gymtrackerandroid/interfaces/Exercise.dart';
 
 class UserBloc extends ChangeNotifier {
   bool loggedin = false;
   FirebaseUser user;
-  Firestore store;
+  List<Exercise> allExercises;
   void changeLogin(bool status){
     loggedin = status;
     notifyListeners();
@@ -14,6 +14,10 @@ class UserBloc extends ChangeNotifier {
   void setUser(FirebaseUser _user){
     user = _user;
     notifyListeners();
+  }
+
+  void setAllExcercises(List<Exercise> list){
+    this.allExercises = list;
   }
 }
 

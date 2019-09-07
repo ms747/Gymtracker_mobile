@@ -34,8 +34,10 @@ class FirestoreData extends StatelessWidget {
           }
         });
 
+        user.setAllExcercises(list);
+
         return ListView.builder(
-          itemCount: list.length,
+          itemCount: user.allExercises.length,
           itemBuilder: (_, i) {
             return Card(
               elevation: 4,
@@ -43,8 +45,8 @@ class FirestoreData extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  buildTitle(list, i),
-                  ...buildSubexercise(list, i)
+                  buildTitle(user.allExercises, i),
+                  ...buildSubexercise(user.allExercises, i)
                 ],
               ),
             );
