@@ -39,9 +39,11 @@ class _ModalState extends State<Modal> {
         title: Text("Add Exercise"),
         actions: <Widget>[
           FlatButton(
-            child: Text("Done"),
+            child: const Text("Done"),
             onPressed: () async {
               if (_key.currentState.validate()) {
+                Navigator.pop(context);
+                user.setLoadingState(true);
                 var mydb = Firestore.instance;
                 var newData = await mydb
                     .collection(user.user.uid)
@@ -49,14 +51,14 @@ class _ModalState extends State<Modal> {
                     .get();
                 var data = newData.data;
                 data[_name.value.text] = {
-                  "weight": _weight.value.text,
-                  "reps": _reps.value.text
+                  "weight": int.parse(_weight.value.text),
+                  "reps": int.parse(_reps.value.text),
                 };
                 await mydb
                     .collection(user.user.uid)
                     .document(currentValue)
                     .setData(data);
-                Navigator.pop(context);
+                user.setLoadingState(false);
               }
             },
           ),

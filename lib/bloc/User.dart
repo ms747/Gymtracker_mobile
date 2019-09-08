@@ -6,6 +6,7 @@ class UserBloc extends ChangeNotifier {
   bool loggedin = false;
   FirebaseUser user;
   List<Exercise> allExercises;
+  bool loading = false;
   void changeLogin(bool status){
     loggedin = status;
     notifyListeners();
@@ -18,6 +19,11 @@ class UserBloc extends ChangeNotifier {
 
   void setAllExcercises(List<Exercise> list){
     this.allExercises = list;
+  }
+  
+  void setLoadingState(bool state){
+    this.loading = state;
+    notifyListeners();
   }
 }
 

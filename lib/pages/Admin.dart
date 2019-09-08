@@ -12,7 +12,7 @@ class AdminPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: buildAppBar(user, context),
-      body: buildBody(user, context),
+      body: user.loading ? Center(child:CircularProgressIndicator()): buildBody(user, context),
       floatingActionButton: buildFloatingActionButton(context),
     );
   }
