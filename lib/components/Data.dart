@@ -1,12 +1,49 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:gymtrackerandroid/bloc/Direction.dart';
 import 'package:gymtrackerandroid/components/Modal.dart';
 import 'package:gymtrackerandroid/helper/Text.dart';
 import 'package:gymtrackerandroid/interfaces/Exercise.dart';
 import 'package:provider/provider.dart';
 import '../bloc/User.dart';
 
-class FirestoreData extends StatelessWidget {
+class FirestoreData extends StatefulWidget {
+  final DirectionBloc directionBloc;
+  FirestoreData(this.directionBloc);
+  @override
+  _FirestoreDataState createState() => _FirestoreDataState(this.directionBloc);
+}
+
+class _FirestoreDataState extends State<FirestoreData> {
+  var _scrollController = ScrollController();
+  DirectionBloc directionBloc;
+  _FirestoreDataState(this.directionBloc);
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(() {
+      if (_scrollController.position.userScrollDirection ==
+          ScrollDirection.reverse) {
+        if (directionBloc.visible) {
+          directionBloc.setVisibility(false);
+        }
+      } else if (_scrollController.position.userScrollDirection ==
+          ScrollDirection.forward) {
+        if (!directionBloc.visible) {
+          directionBloc.setVisibility(true);
+        }
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     var user = Provider.of<UserBloc>(context);
@@ -39,6 +76,7 @@ class FirestoreData extends StatelessWidget {
 
         return ListView.builder(
           itemCount: user.allExercises.length,
+          controller: _scrollController,
           itemBuilder: (_, i) {
             return Card(
               elevation: 4,

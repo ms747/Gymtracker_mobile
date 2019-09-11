@@ -5,9 +5,13 @@ import 'package:gymtrackerandroid/pages/Login.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(
-      ChangeNotifierProvider(
-        builder: (BuildContext context) => UserBloc(),
+      MultiProvider(
         child: MyApp(),
+        providers: <SingleChildCloneableWidget>[
+          ChangeNotifierProvider(
+            builder: (_) => UserBloc(),
+          )
+        ],
       ),
     );
 
@@ -17,7 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      initialRoute: '/', 
+      initialRoute: '/',
       routes: {
         "/": (context) => LoginPage(),
         "/admin": (context) => AdminPage()

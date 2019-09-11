@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gymtrackerandroid/bloc/Direction.dart';
 import 'package:gymtrackerandroid/bloc/User.dart';
 import 'package:gymtrackerandroid/components/Data.dart';
 import 'package:gymtrackerandroid/components/Modal.dart';
@@ -6,33 +7,17 @@ import 'package:gymtrackerandroid/helper/Auth.dart';
 import 'package:provider/provider.dart';
 
 class AdminPage extends StatelessWidget {
+  final directionBloc = DirectionBloc();
   @override
   Widget build(BuildContext context) {
     var user = Provider.of<UserBloc>(context);
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: buildAppBar(user, context),
-      body: user.loading ? Center(child:CircularProgressIndicator()): buildBody(user, context),
-      floatingActionButton: buildFloatingActionButton(context),
-    );
-  }
-
-  Widget buildFloatingActionButton(BuildContext context) {
-    return FloatingActionButton(
-      child: Icon(Icons.add),
-      tooltip: "Add Exercise",
-      onPressed: () {
-        _showModal(context);
-      },
-    );
-  }
-
-  void _showModal(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (ctx) {
-        return Modal();
-      },
+      body: user.loading
+          ? Center(child: CircularProgressIndicator())
+          : buildBody(user, context,directionBloc),
+      floatingActionButton: FAB(directionBloc),
     );
   }
 
@@ -58,8 +43,8 @@ class AdminPage extends StatelessWidget {
     );
   }
 
-  Widget buildBody(UserBloc user, BuildContext context) {
-    return Center(child: FirestoreData());
+  Widget buildBody(UserBloc user, BuildContext context, DirectionBloc directionBloc) {
+    return Center(child: FirestoreData(directionBloc));
   }
 
   void doLogout(UserBloc user, BuildContext context) {
@@ -67,5 +52,34 @@ class AdminPage extends StatelessWidget {
       user.changeLogin(null);
       Navigator.pushReplacementNamed(context, "/");
     });
+  }
+}
+
+class FAB extends StatelessWidget {
+  final DirectionBloc directionBloc;
+
+  FAB(this.directionBloc);
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      builder: (_) => directionBloc,
+      child: Consumer<DirectionBloc>(
+        builder: (ctx, data, _) {
+          return data.visible ? FloatingActionButton(
+            child: Icon(Icons.add),
+            tooltip: "Add Exercise",
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (ctx) {
+                  return Modal();
+                },
+              );
+            },
+          ):Container();
+        },
+      ),
+    );
   }
 }
