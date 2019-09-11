@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:gymtrackerandroid/components/Modal.dart';
 import 'package:gymtrackerandroid/helper/Text.dart';
 import 'package:gymtrackerandroid/interfaces/Exercise.dart';
 import 'package:provider/provider.dart';
@@ -46,7 +47,7 @@ class FirestoreData extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   buildTitle(user.allExercises, i),
-                  ...buildSubexercise(user.allExercises, i)
+                  ...buildSubexercise(user.allExercises, i, user, context)
                 ],
               ),
             );
@@ -64,14 +65,26 @@ class FirestoreData extends StatelessWidget {
         ),
       );
 
-  Iterable<ListTile> buildSubexercise(List<Exercise> list, int i) {
+  Iterable<ListTile> buildSubexercise(
+      List<Exercise> list, int i, UserBloc user, BuildContext context) {
     return list[i].sub.asMap().map((a, d) {
       return MapEntry(
         a,
         ListTile(
           trailing: IconButton(
             icon: Icon(Icons.edit),
-            onPressed: () {},
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (ctx) {
+                    return Modal(
+                      reps: 12,
+                      weight: 90,
+                      subexercise: d,
+                      mainexercise: list[i].main,
+                    );
+                  });
+            },
           ),
           title: Text(capitalizeFirstLetter(d)),
           subtitle: Text(

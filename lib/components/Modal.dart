@@ -6,20 +6,47 @@ import 'package:gymtrackerandroid/helper/Text.dart';
 import 'package:provider/provider.dart';
 
 class Modal extends StatefulWidget {
-  const Modal({
-    Key key,
-  }) : super(key: key);
-
+  final int reps;
+  final int weight;
+  final String subexercise;
+  final String mainexercise;
+  const Modal(
+      {Key key,
+      this.reps = 0,
+      this.weight = 0,
+      this.subexercise,
+      this.mainexercise})
+      : super(key: key);
   @override
-  _ModalState createState() => _ModalState();
+  _ModalState createState() => _ModalState(
+      reps: this.reps,
+      weight: this.weight,
+      subexercise: this.subexercise,
+      mainexercise: this.mainexercise);
 }
 
 class _ModalState extends State<Modal> {
+  int reps;
+  int weight;
+  String subexercise;
+  String mainexercise;
+  _ModalState({this.reps, this.weight, this.subexercise, this.mainexercise});
+
   String currentValue;
   var _key = GlobalKey<FormState>();
   var _name = TextEditingController();
   var _reps = TextEditingController();
   var _weight = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _reps.text = reps.toString();
+    _weight.text = weight.toString();
+    _name.text = subexercise;
+    currentValue = mainexercise;
+  }
+
   @override
   Widget build(BuildContext context) {
     var user = Provider.of<UserBloc>(context);
@@ -50,6 +77,7 @@ class _ModalState extends State<Modal> {
                     .document(currentValue)
                     .get();
                 var data = newData.data;
+                print(data);
                 data[_name.value.text] = {
                   "weight": int.parse(_weight.value.text),
                   "reps": int.parse(_reps.value.text),
