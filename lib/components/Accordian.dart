@@ -29,9 +29,6 @@ class MyAccordian extends StatelessWidget {
                       ];
                       return choices;
                     },
-                    onSelected: (x) {
-                      print(x);
-                    },
                   )
                 ],
               ),

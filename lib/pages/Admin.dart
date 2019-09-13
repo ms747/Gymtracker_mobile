@@ -16,7 +16,7 @@ class AdminPage extends StatelessWidget {
       appBar: buildAppBar(user, context),
       body: user.loading
           ? Center(child: CircularProgressIndicator())
-          : buildBody(user, context,directionBloc),
+          : buildBody(user, context, directionBloc),
       floatingActionButton: FAB(directionBloc),
     );
   }
@@ -43,7 +43,8 @@ class AdminPage extends StatelessWidget {
     );
   }
 
-  Widget buildBody(UserBloc user, BuildContext context, DirectionBloc directionBloc) {
+  Widget buildBody(
+      UserBloc user, BuildContext context, DirectionBloc directionBloc) {
     return Center(child: FirestoreData(directionBloc));
   }
 
@@ -55,31 +56,44 @@ class AdminPage extends StatelessWidget {
   }
 }
 
-class FAB extends StatelessWidget {
+class FAB extends StatefulWidget {
   final DirectionBloc directionBloc;
 
   FAB(this.directionBloc);
 
   @override
+  _FABState createState() => _FABState();
+}
+
+class _FABState extends State<FAB> {
+  @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      builder: (_) => directionBloc,
-      child: Consumer<DirectionBloc>(
-        builder: (ctx, data, _) {
-          return data.visible ? FloatingActionButton(
-            child: Icon(Icons.add),
-            tooltip: "Add Exercise",
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (ctx) {
-                  return Modal();
+    return Stack(overflow: Overflow.visible, children: [
+      ChangeNotifierProvider(
+        builder: (_) => widget.directionBloc,
+        child: Consumer<DirectionBloc>(
+          builder: (ctx, data, _) {
+            return AnimatedPositioned(
+              duration: Duration(milliseconds: 600),
+              curve: Curves.easeInOut,
+              bottom: data.visible ? 0 : -100,
+              right: 0,
+              child: FloatingActionButton(
+                child: Icon(Icons.add),
+                tooltip: "Add Exercise",
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (ctx) {
+                      return Modal();
+                    },
+                  );
                 },
-              );
-            },
-          ):Container();
-        },
+              ),
+            );
+          },
+        ),
       ),
-    );
+    ]);
   }
 }

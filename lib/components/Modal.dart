@@ -18,20 +18,10 @@ class Modal extends StatefulWidget {
       this.mainexercise})
       : super(key: key);
   @override
-  _ModalState createState() => _ModalState(
-      reps: this.reps,
-      weight: this.weight,
-      subexercise: this.subexercise,
-      mainexercise: this.mainexercise);
+  _ModalState createState() => _ModalState();
 }
 
 class _ModalState extends State<Modal> {
-  int reps;
-  int weight;
-  String subexercise;
-  String mainexercise;
-  _ModalState({this.reps, this.weight, this.subexercise, this.mainexercise});
-
   String currentValue;
   var _key = GlobalKey<FormState>();
   var _name = TextEditingController();
@@ -41,10 +31,10 @@ class _ModalState extends State<Modal> {
   @override
   void initState() {
     super.initState();
-    _reps.text = reps.toString();
-    _weight.text = weight.toString();
-    _name.text = subexercise;
-    currentValue = mainexercise;
+    _reps.text = widget.reps.toString();
+    _weight.text = widget.weight.toString();
+    _name.text = widget.subexercise;
+    currentValue = widget.mainexercise;
   }
 
   @override
@@ -77,7 +67,6 @@ class _ModalState extends State<Modal> {
                     .document(currentValue)
                     .get();
                 var data = newData.data;
-                print(data);
                 data[_name.value.text] = {
                   "weight": int.parse(_weight.value.text),
                   "reps": int.parse(_reps.value.text),

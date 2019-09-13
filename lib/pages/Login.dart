@@ -4,6 +4,7 @@ import 'package:gymtrackerandroid/bloc/User.dart';
 import 'package:gymtrackerandroid/helper/Auth.dart';
 import 'package:provider/provider.dart';
 
+
 class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

@@ -16,7 +16,6 @@ Future<FirebaseUser> login() async {
     );
 
     user = (await _auth.signInWithCredential(credential)).user;
-    print("signed in " + user.displayName);
   }
   return user;
 }
@@ -24,7 +23,6 @@ Future<FirebaseUser> login() async {
 Future<FirebaseUser> isLoggedIn() async {
   final user = await FirebaseAuth.instance.currentUser();
   if (user != null) {
-    print("Already Logged In");
   }
   return user;
 }

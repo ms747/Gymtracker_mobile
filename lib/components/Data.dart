@@ -6,19 +6,18 @@ import 'package:gymtrackerandroid/components/Modal.dart';
 import 'package:gymtrackerandroid/helper/Text.dart';
 import 'package:gymtrackerandroid/interfaces/Exercise.dart';
 import 'package:provider/provider.dart';
+
 import '../bloc/User.dart';
 
 class FirestoreData extends StatefulWidget {
   final DirectionBloc directionBloc;
   FirestoreData(this.directionBloc);
   @override
-  _FirestoreDataState createState() => _FirestoreDataState(this.directionBloc);
+  _FirestoreDataState createState() => _FirestoreDataState();
 }
 
 class _FirestoreDataState extends State<FirestoreData> {
   var _scrollController = ScrollController();
-  DirectionBloc directionBloc;
-  _FirestoreDataState(this.directionBloc);
 
   @override
   void initState() {
@@ -26,13 +25,13 @@ class _FirestoreDataState extends State<FirestoreData> {
     _scrollController.addListener(() {
       if (_scrollController.position.userScrollDirection ==
           ScrollDirection.reverse) {
-        if (directionBloc.visible) {
-          directionBloc.setVisibility(false);
+        if (widget.directionBloc.visible) {
+          widget.directionBloc.setVisibility(false);
         }
       } else if (_scrollController.position.userScrollDirection ==
           ScrollDirection.forward) {
-        if (!directionBloc.visible) {
-          directionBloc.setVisibility(true);
+        if (!widget.directionBloc.visible) {
+          widget.directionBloc.setVisibility(true);
         }
       }
     });

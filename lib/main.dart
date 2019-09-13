@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 void main() => runApp(
       MultiProvider(
         child: MyApp(),
-        providers: <SingleChildCloneableWidget>[
+        providers: [
           ChangeNotifierProvider(
             builder: (_) => UserBloc(),
           )
