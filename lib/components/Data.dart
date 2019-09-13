@@ -116,8 +116,8 @@ class _FirestoreDataState extends State<FirestoreData> {
                   context: context,
                   builder: (ctx) {
                     return Modal(
-                      reps: 12,
-                      weight: 90,
+                      reps: list[i].info[a].reps,
+                      weight: list[i].info[a].weight,
                       subexercise: d,
                       mainexercise: list[i].main,
                     );
