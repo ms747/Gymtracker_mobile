@@ -111,9 +111,20 @@ class _FirestoreDataState extends State<FirestoreData> {
           trailing: IconButton(
             icon: Icon(Icons.edit),
             onPressed: () {
-              showDialog(
+              showGeneralDialog(
+                  transitionDuration: Duration(milliseconds: 500),
                   context: context,
-                  builder: (ctx) {
+                  barrierDismissible: true,
+                  barrierColor: Colors.black.withOpacity(0.5),
+                  barrierLabel: '',
+                  transitionBuilder: (context, a1, a2, widget) {
+                    final curvedValue = Curves.fastOutSlowIn.transform(a1.value) -   1.0;
+                    return Transform(
+                      child: widget,
+                      transform: Matrix4.translationValues(0, 500*curvedValue, 0),
+                    );
+                  },
+                  pageBuilder: (context, animation, secondaryAnimation) {
                     return Modal(
                       reps: list[i].info[a].reps,
                       weight: list[i].info[a].weight,

@@ -74,9 +74,9 @@ class _FABState extends State<FAB> {
         child: Consumer<DirectionBloc>(
           builder: (ctx, data, _) {
             return AnimatedPositioned(
-              duration: Duration(milliseconds: 600),
-              curve: Curves.easeInOut,
-              bottom: data.visible ? 0 : -100,
+              duration: Duration(milliseconds: 500),
+              curve: Curves.fastOutSlowIn,
+              bottom: data.visible ? 0 : -200,
               right: 0,
               child: FloatingActionButton(
                 child: Icon(Icons.add),
