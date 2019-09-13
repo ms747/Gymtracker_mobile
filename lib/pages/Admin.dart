@@ -69,8 +69,9 @@ class _FABState extends State<FAB> {
   @override
   Widget build(BuildContext context) {
     return Stack(overflow: Overflow.visible, children: [
-      ChangeNotifierProvider(
-        builder: (_) => widget.directionBloc,
+      ChangeNotifierProvider.value(
+        value: widget.directionBloc,
+        //builder: (_) => widget.directionBloc,
         child: Consumer<DirectionBloc>(
           builder: (ctx, data, _) {
             return AnimatedPositioned(
